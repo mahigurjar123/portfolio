@@ -122,7 +122,7 @@ const ContactMe = () => {
   ];
 
   const socialLinks = [
-    { icon: faGithub, href: 'https://github.com/mahigurjar123', label: 'GitHub', color: '#333' },
+    { icon: faGithub, href: 'https://github.com/mahigurjar123/mahendragurjar', label: 'GitHub', color: '#333' },
     { icon: faLinkedin, href: 'https://linkedin.com/in/mahendra121', label: 'LinkedIn', color: '#0077b5' },
     { icon: faInstagram, href: 'https://instagram.com/m.gurjar131', label: 'Instagram', color: '#e4405f' }
   ];

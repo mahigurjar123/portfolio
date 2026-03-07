@@ -59,7 +59,7 @@ const ProfileCard = () => {
 
         {/* Social Links */}
         <div className="flex justify-center gap-3">
-          <a href="https://github.com/mahigurjar123" target="_blank" rel="noreferrer"
+          <a href="https://github.com/mahigurjar123/mahendragurjar" target="_blank" rel="noreferrer"
              className="p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-sky-500/50 transition-all duration-300 hover:scale-110 hover:-translate-y-1">
             <FaGithub className="w-4 h-4 text-zinc-400 hover:text-white" />
           </a>

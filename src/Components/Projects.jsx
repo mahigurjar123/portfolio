@@ -1156,7 +1156,7 @@ const Projects = () => {
         {/* Social Links */}
         <div className="fixed bottom-6 right-6 z-50 flex space-x-3">
           <motion.a
-            href="https://github.com/mahigurjar"
+            href="https://github.com/mahigurjar123/mahendragurjar"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-gray-800/50 backdrop-blur-sm p-2 rounded-lg border border-gray-700/50 hover:border-purple-500/50 transition-all duration-300"

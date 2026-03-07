@@ -65,7 +65,7 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: faGithub,
-      href: "https://github.com/mahigurjar123",
+      href: "https://github.com/mahigurjar123/mahendragurjar",
       color: "#333",
       hoverColor: "#fff",
       bgGradient: "from-gray-700 to-gray-900",
