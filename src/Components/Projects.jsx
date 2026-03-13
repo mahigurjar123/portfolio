@@ -140,7 +140,7 @@ const BackgroundDigitalAnimation = () => {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [codeSnippets]);
+  }, []);
 
   // Calculate connections between nearby particles
   useEffect(() => {
