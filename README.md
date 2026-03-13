@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌟 Personal Portfolio Website
 
 Welcome to my **Personal Portfolio Website** repository! 🚀
@@ -75,3 +76,6 @@ To run this project locally, follow these steps:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/MAHI1415/portfolio.git
+=======
+# portfolio
+>>>>>>> 73fcf80b5540dbd248d1370520d05fb0d9b74112
