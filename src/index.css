@@ -18,6 +18,7 @@ body {
 /* Headings */
 .component-headings {
   background: -webkit-linear-gradient(0deg, #fafafa, #02b7ff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.2;
@@ -30,6 +31,7 @@ body {
 .headline-1 {
   @apply max-w-max;
   background: -webkit-linear-gradient(0deg, #fafafa, #02b7ff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   @apply text-5xl leading-tight font-semibold lg:text-[55px] lg:leading-[1.15];
@@ -212,7 +214,7 @@ footer a:hover {
 }
 
 /* Utilities */
-.bg-300% {
+.bg-300-animate {
   background-size: 300% 300%;
 }
 
@@ -468,31 +470,29 @@ header {
   animation: logo-pop 0.2s ease-out;
 }
 
-/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+/* PERFORMANCE OPTIMIZATIONS */
 
-/* Disable heavy animations on mobile */
+/* Slightly reduced animations on mobile for smoothness while keeping quality */
 @media (max-width: 768px) {
-  .animate-gradient,
-  .animate-pulse-slow,
-  .animate-float,
-  .animate-ping {
-    animation: none !important;
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 12s ease infinite;
   }
 
-  .backdrop-blur-sm,
-  .backdrop-blur-md,
-  .backdrop-blur-lg,
+  /* Restore subtle blurs for premium feel on modern mobile devices */
   .backdrop-blur-xl,
   .backdrop-blur-2xl {
-    backdrop-filter: none !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
   }
 
   h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
+    line-height: 1.2;
   }
 
   .container {
-    @apply px-4;
+    @apply px-5;
   }
 }
 

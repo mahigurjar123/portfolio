@@ -124,7 +124,7 @@ const Hero = () => {
             <div className="space-y-3">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.1] tracking-tight">
                 <span className="block relative group">
-                  <span className="relative z-10 bg-gradient-to-r from-white via-sky-400 to-purple-400 bg-clip-text text-transparent bg-300% animate-gradient">
+                  <span className="relative z-10 bg-gradient-to-r from-white via-sky-400 to-purple-400 bg-clip-text text-transparent bg-300-animate animate-gradient">
                     Crafting
                   </span>
                   <span className="absolute -bottom-2 left-0 w-0 group-hover:w-full h-1 bg-gradient-to-r from-sky-500 to-purple-500 rounded-full transition-all duration-700"></span>

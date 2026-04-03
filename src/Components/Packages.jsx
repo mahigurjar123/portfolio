@@ -93,24 +93,24 @@ const PackageCard = ({ pkg, index }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
-      className="relative h-[480px] w-full group"
+      className="relative min-h-[520px] md:h-[500px] w-full group"
     >
       {/* 3D Glass Surface Card */}
       <div 
         style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
-        className="absolute inset-0 rounded-[40px] bg-zinc-900/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-500 group-hover:border-sky-500/50"
+        className="absolute inset-0 rounded-[30px] md:rounded-[40px] bg-zinc-900/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-500 group-hover:border-sky-500/50"
       >
         {/* Dynamic 3D Background */}
         <Card3DBackground color={pkg.color} />
 
         {/* Content Container */}
-        <div style={{ transform: "translateZ(80px)" }} className="relative z-10 p-8 h-full flex flex-col">
+        <div style={{ transform: "translateZ(80px)" }} className="relative z-10 p-6 md:p-8 h-full flex flex-col">
           
           {/* Custom Logo/Icon with Glow */}
-          <div className="flex justify-between items-start mb-8">
-            <div className={`relative px-5 py-5 rounded-3xl bg-gradient-to-br ${pkg.colorName} shadow-2xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-500`}>
-              <pkg.icon className="text-4xl text-white animate-pulse" />
-              <div className="absolute inset-0 bg-white/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div className="flex justify-between items-start mb-6 md:mb-8">
+            <div className={`relative px-4 py-4 md:px-5 md:py-5 rounded-2xl md:rounded-3xl bg-gradient-to-br ${pkg.colorName} shadow-2xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-500`}>
+              <pkg.icon className="text-3xl md:text-4xl text-white animate-pulse" />
+              <div className="absolute inset-0 bg-white/20 rounded-2xl md:rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             <div className="flex flex-col items-end">
               <div className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-zinc-300 uppercase tracking-widest">
@@ -121,7 +121,7 @@ const PackageCard = ({ pkg, index }) => {
           </div>
 
           {/* Title & Info */}
-          <h3 className="text-3xl font-black text-white mb-2 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-sky-400 group-hover:to-purple-400 transition-all duration-300">
+          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-sky-400 group-hover:to-purple-400 transition-all duration-300">
             {pkg.name}
           </h3>
           <div className="h-1 w-12 bg-sky-500 rounded-full mb-4 group-hover:w-24 transition-all duration-500"></div>
@@ -131,7 +131,7 @@ const PackageCard = ({ pkg, index }) => {
           </p>
 
           {/* Features Badges */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
             {pkg.features.map((feat, i) => (
               <span key={i} className="px-3 py-1 rounded-xl bg-zinc-800/80 border border-white/5 text-[10px] font-bold text-zinc-400 group-hover:text-sky-300 transition-colors">
                 {feat}
@@ -140,7 +140,7 @@ const PackageCard = ({ pkg, index }) => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-4 mt-auto">
+          <div className="flex items-center gap-3 md:gap-4 mt-auto">
             <a 
               href={pkg.pub}
               target="_blank"
@@ -189,9 +189,9 @@ const Packages = () => {
             <span>Premium Dev Resources</span>
           </motion.div>
           <h2 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter">
-            <span className="bg-gradient-to-r from-white via-sky-400 to-purple-400 bg-clip-text text-transparent bg-300% animate-gradient">
-              Open Source
-            </span>
+              <span className="bg-gradient-to-r from-white via-sky-400 to-purple-400 bg-clip-text text-transparent bg-300-animate animate-gradient">
+                Open Source
+              </span>
           </h2>
           <p className="text-zinc-500 max-w-2xl mx-auto text-xl font-medium leading-relaxed">
             Highly optimized, production-ready Flutter packages designed for performance, stability, and ease of use.
@@ -214,7 +214,7 @@ const Packages = () => {
         .animate-gradient {
           animation: gradient 8s ease infinite;
         }
-        .bg-300% {
+        .bg-300-animate {
           background-size: 300% 300%;
         }
         .animation-delay-2000 {
