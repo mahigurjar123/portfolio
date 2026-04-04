@@ -282,11 +282,11 @@ footer a:hover {
   color: white;
 }
 
-/* Smooth Transitions */
-* {
+/* Smooth Transitions - Specific to interactive elements for better performance */
+a, button, input, select, textarea, .nav-link, .btn, .card, .profile-card, .group {
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-duration: 200ms;
 }
 
 /* Navbar Styles */
@@ -524,68 +524,5 @@ header {
 
 /* Add these at the end of your tailwind.css file */
 
-@keyframes ping-slow {
-  75%, 100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-.animate-ping-slow {
-  animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1.05);
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
-
-/* Ripple Effect */
-.ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 50%, transparent 70%);
-  transform: scale(0);
-  animation: ripple-animation 0.6s ease-out;
-  pointer-events: none;
-  z-index: 20;
-}
-
-@keyframes ripple-animation {
-  0% {
-    transform: scale(0);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(2);
-    opacity: 0.3;
-  }
-  100% {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
+/* Animation Classes Re-definitions Removed */
 

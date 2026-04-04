@@ -11,6 +11,7 @@ const Hero = () => {
   const floatingRef = useRef(null);
 
   const fullText = "Senior Flutter Developer";
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   useEffect(() => {
     // Infinity Typewriter Effect
@@ -54,6 +55,7 @@ const Hero = () => {
     timeoutId = setTimeout(typeWriter, 500);
 
     const handleMouseMove = (e) => {
+      if (isMobile) return;
       if (heroRef.current) {
         const { clientX, clientY } = e;
         const { width, height, left, top } = heroRef.current.getBoundingClientRect();
@@ -63,13 +65,15 @@ const Hero = () => {
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       clearTimeout(timeoutId); // Clean up timeout on unmount
     };
-  }, []); // Empty dependency array - runs once on mount
+  }, [isMobile]); // Re-run if isMobile changes
 
   return (
     <section

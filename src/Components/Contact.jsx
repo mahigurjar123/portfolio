@@ -28,6 +28,7 @@ const ContactMe = () => {
   const [focusedField, setFocusedField] = useState(null);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,16 +55,6 @@ const ContactMe = () => {
       setTimeout(() => setFormStatus('idle'), 5000);
     }
   };
-
-//   // Animation variants
-//   const fadeInUp = {
-//     hidden: { opacity: 0, y: 60 },
-//     visible: {
-//       opacity: 1,
-//       y: 0,
-//       transition: { duration: 0.6, ease: "easeOut" }
-//     }
-//   };
 
   const fadeInLeft = {
     hidden: { opacity: 0, x: -60 },
@@ -144,60 +135,64 @@ const ContactMe = () => {
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Gradient Orbs */}
-        <motion.div
-          className="absolute top-40 -left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.3, 0.2],
-            x: [0, 50, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        {!isMobile && (
+          <>
+            {/* Gradient Orbs */}
+            <motion.div
+              className="absolute top-40 -left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.3, 0.2],
+                x: [0, 50, 0],
+                y: [0, -30, 0]
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
 
-        <motion.div
-          className="absolute bottom-40 -right-20 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, -50, 0],
-            y: [0, 30, 0]
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+            <motion.div
+              className="absolute bottom-40 -right-20 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.4, 0.2],
+                x: [0, -50, 0],
+                y: [0, 30, 0]
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+
+            {/* Floating Particles */}
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-purple-500/30 rounded-full"
+                initial={{
+                  x: Math.random() * 100 + "%",
+                  y: Math.random() * 100 + "%",
+                }}
+                animate={{
+                  y: [null, "-30%", "+30%", "-30%"],
+                  opacity: [0.2, 0.5, 0.2]
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 10,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            ))}
+          </>
+        )}
 
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f1a_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f1a_1px,transparent_1px)] bg-[size:64px_64px]" />
-
-        {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-500/30 rounded-full"
-            initial={{
-              x: Math.random() * 100 + "%",
-              y: Math.random() * 100 + "%",
-            }}
-            animate={{
-              y: [null, "-30%", "+30%", "-30%"],
-              opacity: [0.2, 0.5, 0.2]
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">

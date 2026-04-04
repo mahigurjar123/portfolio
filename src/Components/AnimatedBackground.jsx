@@ -95,16 +95,17 @@ function FloatingCube({ position, color, speed = 1, scale = 1 }) {
 
 // Particle Nebula Dust
 function ParticleField() {
-  const count = 800;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const count = isMobile ? 300 : 800; // Reduced count for mobile
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * 60;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 60;
+      arr[i * 3] = (Math.random() - 0.5) * (isMobile ? 40 : 60);
+      arr[i * 3 + 1] = (Math.random() - 0.5) * (isMobile ? 40 : 60);
       arr[i * 3 + 2] = (Math.random() - 0.5) * 40;
     }
     return arr;
-  }, []);
+  }, [count, isMobile]);
 
   const colors = useMemo(() => {
     const arr = new Float32Array(count * 3);
@@ -121,7 +122,7 @@ function ParticleField() {
       arr[i * 3 + 2] = col.b;
     }
     return arr;
-  }, []);
+  }, [count]);
 
   const particlesRef = useRef();
   useFrame((state) => {
@@ -135,17 +136,25 @@ function ParticleField() {
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
         <bufferAttribute attach="attributes-color" count={count} array={colors} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.15} vertexColors sizeAttenuation transparent opacity={0.9} />
+      <pointsMaterial size={isMobile ? 0.2 : 0.15} vertexColors sizeAttenuation transparent opacity={0.8} />
     </points>
   );
 }
 
 // Mouse-reactive camera movement
 function CameraRig() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
   useFrame((state) => {
-    const mouse = state.mouse;
-    state.camera.position.x += (mouse.x * 2 - state.camera.position.x) * 0.05;
-    state.camera.position.y += (-mouse.y * 1.5 - state.camera.position.y) * 0.05;
+    if (isMobile) {
+      // Auto-float on mobile since there is no mouse movement typically
+      const t = state.clock.elapsedTime * 0.3;
+      state.camera.position.x = Math.sin(t) * 2;
+      state.camera.position.y = Math.cos(t) * 1.5;
+    } else {
+      const mouse = state.mouse;
+      state.camera.position.x += (mouse.x * 2 - state.camera.position.x) * 0.05;
+      state.camera.position.y += (-mouse.y * 1.5 - state.camera.position.y) * 0.05;
+    }
     state.camera.lookAt(0, 0, 0);
   });
   return null;
@@ -153,6 +162,8 @@ function CameraRig() {
 
 // Scene
 function Scene() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  
   return (
     <>
       <CameraRig />
@@ -163,50 +174,51 @@ function Scene() {
       <pointLight position={[-10, -10, 5]} intensity={1.5} color="#38bdf8" />
       <pointLight position={[0, 0, -10]} intensity={1} color="#ec4899" />
 
-      {/* Stars background */}
-      <Stars radius={80} depth={50} count={3000} factor={4} saturation={1} fade speed={1} />
+      {/* Stars background - Reduced for mobile */}
+      <Stars radius={80} depth={50} count={isMobile ? 1000 : 3000} factor={4} saturation={1} fade speed={1} />
 
       {/* Particle field */}
       <ParticleField />
 
-      {/* Floating Glow Orbs (Icosahedrons) */}
+      {/* Floating Glow Orbs (Icosahedrons) - Minimal on mobile */}
       <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
         <GlowOrb position={[-8, 3, -5]} color="#a855f7" speed={0.8} scale={1.2} />
       </Float>
-      <Float speed={2} rotationIntensity={0.6} floatIntensity={0.7}>
-        <GlowOrb position={[9, -2, -8]} color="#38bdf8" speed={1.2} scale={0.9} />
-      </Float>
+      {!isMobile && (
+        <Float speed={2} rotationIntensity={0.6} floatIntensity={0.7}>
+          <GlowOrb position={[9, -2, -8]} color="#38bdf8" speed={1.2} scale={0.9} />
+        </Float>
+      )}
       <Float speed={1} rotationIntensity={0.4} floatIntensity={0.6}>
         <GlowOrb position={[0, 5, -12]} color="#ec4899" speed={0.6} scale={1.5} />
       </Float>
-      <Float speed={2.5} rotationIntensity={0.8} floatIntensity={0.5}>
-        <GlowOrb position={[-12, -4, -10]} color="#818cf8" speed={1.0} scale={0.7} />
-      </Float>
 
-      {/* Glowing Rings */}
-      <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.4}>
-        <GlowRing position={[6, 4, -15]} color="#a855f7" speed={0.7} scale={1.5} />
-      </Float>
-      <Float speed={1.8} rotationIntensity={0.5} floatIntensity={0.8}>
-        <GlowRing position={[-7, -5, -12]} color="#ec4899" speed={1.1} scale={1.0} />
-      </Float>
+      {/* Glowing Rings - Fewer on mobile */}
+      {!isMobile && (
+        <>
+          <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.4}>
+            <GlowRing position={[6, 4, -15]} color="#a855f7" speed={0.7} scale={1.5} />
+          </Float>
+          <Float speed={1.8} rotationIntensity={0.5} floatIntensity={0.8}>
+            <GlowRing position={[-7, -5, -12]} color="#ec4899" speed={1.1} scale={1.0} />
+          </Float>
+        </>
+      )}
       <Float speed={1.4} rotationIntensity={0.6} floatIntensity={0.5}>
         <GlowRing position={[2, -7, -18]} color="#38bdf8" speed={0.9} scale={1.8} />
       </Float>
 
-      {/* Floating Cubes */}
-      <Float speed={2} rotationIntensity={1} floatIntensity={0.6}>
-        <FloatingCube position={[5, -3, -7]} color="#a855f7" speed={1.2} scale={1.2} />
-      </Float>
-      <Float speed={1.5} rotationIntensity={0.8} floatIntensity={0.7}>
-        <FloatingCube position={[-5, 6, -9]} color="#38bdf8" speed={0.9} scale={0.8} />
-      </Float>
-      <Float speed={2.2} rotationIntensity={1.2} floatIntensity={0.5}>
-        <FloatingCube position={[11, 2, -13]} color="#ec4899" speed={0.7} scale={1.0} />
-      </Float>
-      <Float speed={1.7} rotationIntensity={0.9} floatIntensity={0.8}>
-        <FloatingCube position={[-10, 1, -6]} color="#818cf8" speed={1.4} scale={0.6} />
-      </Float>
+      {/* Floating Cubes - Only on desktop for best performance */}
+      {!isMobile && (
+        <>
+          <Float speed={2} rotationIntensity={1} floatIntensity={0.6}>
+            <FloatingCube position={[5, -3, -7]} color="#a855f7" speed={1.2} scale={1.2} />
+          </Float>
+          <Float speed={1.5} rotationIntensity={0.8} floatIntensity={0.7}>
+            <FloatingCube position={[-5, 6, -9]} color="#38bdf8" speed={0.9} scale={0.8} />
+          </Float>
+        </>
+      )}
     </>
   );
 }

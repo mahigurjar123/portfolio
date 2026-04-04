@@ -54,18 +54,25 @@ const About = () => {
   const [lineHeight, setLineHeight] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const element = document.getElementById('timeline-container');
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const scrollPercent = Math.min(1, Math.max(0,
-          (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
-        ));
-        setLineHeight(scrollPercent * 100);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const element = document.getElementById('timeline-container');
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            const scrollPercent = Math.min(1, Math.max(0,
+              (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
+            ));
+            setLineHeight(scrollPercent * 100);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

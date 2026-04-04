@@ -7,6 +7,20 @@ import { Float, Sphere, MeshDistortMaterial, RoundedBox } from '@react-three/dre
 
 // Mini 3D Animation for Card Background
 const Card3DBackground = ({ color }) => {
+  // Check if we are on a small screen to avoid heavy WebGL rendering
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  
+  if (isMobile) {
+    return (
+      <div 
+        className="absolute inset-0 z-0 opacity-20"
+        style={{ 
+          background: `radial-gradient(circle at 50% 50%, ${color}44 0%, transparent 70%)`,
+        }}
+      />
+    );
+  }
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
       <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
@@ -61,6 +75,36 @@ const packages = [
     color: "#f59e0b", // amber-500
     colorName: "from-amber-500 to-orange-400",
     features: ["Dynamic Themes", "Aura Particles", "Responsive"]
+  },
+  {
+    name: "Antigravity AI",
+    description: "Personal elite AI coding partner specializing in advanced architecture, high-performance optimization, and aesthetic UI generation.",
+    github: "https://github.com/MAHI1415",
+    pub: "https://github.com/MAHI1415",
+    icon: "/images/antigravity.png",
+    color: "#06b6d4", // cyan-500
+    colorName: "from-cyan-500 to-blue-500",
+    features: ["Agentic Reasoning", "Zero-G Coding", "Deep Architecture"]
+  },
+  {
+    name: "Cursor AI",
+    description: "Next-generation AI code editor mastery. Leveraging advanced LLMs for predictive coding, instant refactoring, and natural language logic.",
+    github: "https://cursor.com",
+    pub: "https://cursor.com",
+    icon: "/images/cursor.png",
+    color: "#3b82f6", // blue-500
+    colorName: "from-blue-600 to-indigo-600",
+    features: ["Predictive Edit", "Chat Context", "Composer AI"]
+  },
+  {
+    name: "Vibe Coding",
+    description: "Fluid programming paradigm where intuition meets intelligence. Transforming creative energy into high-performance code effortlessly.",
+    github: "https://github.com/MAHI1415",
+    pub: "https://github.com/MAHI1415",
+    icon: "/images/vibe_coding.png",
+    color: "#d946ef", // fuchsia-500
+    colorName: "from-fuchsia-600 to-purple-600",
+    features: ["Intuitive Logic", "Rapid Prototyping", "Creative Flow"]
   }
 ];
 
@@ -71,7 +115,10 @@ const PackageCard = ({ pkg, index }) => {
   const rotateX = useTransform(useSpring(y, { stiffness: 100, damping: 20 }), [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(useSpring(x, { stiffness: 100, damping: 20 }), [-0.5, 0.5], ["-15deg", "15deg"]);
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+
   const handleMouseMove = (e) => {
+    if (isMobile) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const xPct = (e.clientX - rect.left) / rect.width - 0.5;
     const yPct = (e.clientY - rect.top) / rect.height - 0.5;
@@ -89,15 +136,19 @@ const PackageCard = ({ pkg, index }) => {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.2, duration: 0.8 }}
+      transition={{ delay: index * 0.1, duration: 0.8 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+      style={{ 
+        rotateY: isMobile ? 0 : rotateY, 
+        rotateX: isMobile ? 0 : rotateX, 
+        transformStyle: "preserve-3d" 
+      }}
       className="relative h-[480px] w-full group"
     >
       {/* 3D Glass Surface Card */}
       <div 
-        style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
+        style={{ transform: isMobile ? "none" : "translateZ(50px)", transformStyle: "preserve-3d" }}
         className="absolute inset-0 rounded-[40px] bg-zinc-900/40 backdrop-blur-3xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-500 group-hover:border-sky-500/50"
       >
         {/* Dynamic 3D Background */}
@@ -108,14 +159,18 @@ const PackageCard = ({ pkg, index }) => {
           
           {/* Custom Logo/Icon with Glow */}
           <div className="flex justify-between items-start mb-8">
-            <div className={`relative px-5 py-5 rounded-3xl bg-gradient-to-br ${pkg.colorName} shadow-2xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-500`}>
-              <pkg.icon className="text-4xl text-white animate-pulse" />
+            <div className={`relative w-20 h-20 flex items-center justify-center rounded-3xl bg-gradient-to-br ${pkg.colorName} shadow-2xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-500 p-4`}>
+              {typeof pkg.icon === 'string' ? (
+                <img src={pkg.icon} alt={pkg.name} className="w-full h-full object-contain brightness-110 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]" />
+              ) : (
+                <pkg.icon className="text-4xl text-white animate-pulse" />
+              )}
               <div className="absolute inset-0 bg-white/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
             </div>
             <div className="flex flex-col items-end">
               <div className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-zinc-300 uppercase tracking-widest">
                 <SiDart className="text-sky-400" />
-                Live SDK
+                {typeof pkg.icon === 'string' ? 'AI Engine' : 'Live SDK'}
               </div>
             </div>
           </div>
@@ -148,7 +203,7 @@ const PackageCard = ({ pkg, index }) => {
               className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xs shadow-lg hover:shadow-sky-500/30 transition-all active:scale-95"
             >
               <FaExternalLinkAlt size={12} />
-              GET PACKAGE
+              {typeof pkg.icon === 'string' ? 'VIEW TOOL' : 'GET PACKAGE'}
             </a>
             <a 
               href={pkg.github}
@@ -190,7 +245,7 @@ const Packages = () => {
           </motion.div>
           <h2 className="text-4xl md:text-6xl lg:text-8xl font-black mb-6 md:mb-8 tracking-tighter">
             <span className="bg-gradient-to-r from-white via-sky-400 to-purple-400 bg-clip-text text-transparent bg-300% animate-gradient">
-              Open Source
+              Packages & AI
             </span>
           </h2>
           <p className="text-zinc-500 max-w-2xl mx-auto text-lg md:text-xl font-medium leading-relaxed px-4">

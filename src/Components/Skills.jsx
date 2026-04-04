@@ -22,10 +22,13 @@ import { BsFillDatabaseFill } from 'react-icons/bs';
 import { HiOutlineColorSwatch } from 'react-icons/hi';
 import { DiGoogleAnalytics } from 'react-icons/di';
 import { GiTestTubes } from 'react-icons/gi';
+import { SiOpenai } from 'react-icons/si';
+import { CursorIcon, AntigravityIcon, ClaudeIcon } from './AIIcons';
 
 const Skills = () => {
   const sectionRef = React.useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   // Animation variants
   const fadeInUp = {
@@ -70,7 +73,7 @@ const Skills = () => {
       icon: "💻",
       gradient: "from-sky-400 to-blue-500",
       skills: [
-        { name: "Flutter", icon: SiFlutter, level: 98, color: "text-sky-400" },
+        { name: "Flutter", iconImg: "/images/flutter_3d.png", level: 98, color: "text-sky-400" },
         { name: "Dart", icon: SiDart, level: 95, color: "text-sky-400" },
         { name: "JavaScript", icon: null, level: 85, color: "text-yellow-500" },
       ]
@@ -131,7 +134,7 @@ const Skills = () => {
       gradient: "from-pink-400 to-rose-500",
       skills: [
         { name: "Material Design", icon: HiOutlineColorSwatch, level: 95, color: "text-blue-400" },
-        { name: "Android SDK", icon: SiAndroidstudio, level: 90, color: "text-green-500" }
+        { name: "Android SDK", iconImg: "/images/android_3d.png", level: 90, color: "text-green-500" }
       ]
     },
     {
@@ -149,8 +152,8 @@ const Skills = () => {
       icon: "🖥️",
       gradient: "from-blue-400 to-indigo-500",
       skills: [
-        { name: "VS Code", icon: VscCode, level: 98, color: "text-blue-400" },
-        { name: "Android Studio", icon: SiAndroidstudio, level: 95, color: "text-green-500" }
+        { name: "VS Code", iconImg: "/images/web_3d.png", level: 98, color: "text-blue-400" },
+        { name: "Android Studio", iconImg: "/images/android_3d.png", level: 95, color: "text-green-500" }
       ]
     },
     {
@@ -190,15 +193,26 @@ const Skills = () => {
         { name: "DevTools", icon: MdDeveloperMode, level: 92, color: "text-purple-400" }
       ]
     },
-    {
-      title: "Deployment",
-      icon: "📱",
-      gradient: "from-violet-400 to-purple-500",
-      skills: [
-        { name: "Play Console", icon: FaGooglePlay, level: 85, color: "text-green-500" },
-        { name: "App Store", icon: FaApple, level: 80, color: "text-gray-300" }
-      ]
-    }
+      {
+        title: "Modern AI & Coding Tools",
+        icon: "🤖",
+        gradient: "from-blue-600 via-purple-600 to-indigo-600",
+        skills: [
+          { name: "Cursor AI", icon: CursorIcon, level: 95, color: "text-blue-400" },
+          { name: "Antigravity", icon: AntigravityIcon, level: 92, color: "text-purple-400" },
+          { name: "Claude AI", icon: ClaudeIcon, level: 90, color: "text-orange-400" },
+          { name: "OpenAI", icon: SiOpenai, level: 94, color: "text-green-400" }
+        ]
+      },
+      {
+        title: "Deployment",
+        icon: "📱",
+        gradient: "from-violet-400 to-purple-500",
+        skills: [
+          { name: "Play Console", iconImg: "/images/android_3d.png", level: 85, color: "text-green-500" },
+          { name: "App Store", iconImg: "/images/apple_3d.png", level: 80, color: "text-gray-300" }
+        ]
+      }
   ];
 
   // Proficiency indicator component
@@ -309,7 +323,13 @@ const Skills = () => {
                       <div className="relative mb-3">
                         <div className={`absolute inset-0 ${skill.color} opacity-0 group-hover:opacity-20 blur-lg transition-opacity duration-300`}></div>
                         <div className={`flex items-center justify-center text-3xl lg:text-4xl ${skill.color} group-hover:scale-110 transition-transform duration-300 animate-float`}>
-                          {skill.icon ? (
+                          {skill.iconImg ? (
+                            <img 
+                              src={skill.iconImg} 
+                              alt={skill.name} 
+                              className="w-12 h-12 object-contain drop-shadow-2xl"
+                            />
+                          ) : skill.icon ? (
                             <skill.icon />
                           ) : (
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-purple-400 flex items-center justify-center text-white text-sm font-bold">
@@ -338,29 +358,31 @@ const Skills = () => {
         <div className="h-20"></div>
       </div>
 
-      {/* Floating Particles for Premium Feel */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-gradient-to-r from-sky-500/30 to-purple-500/30 rounded-full"
-            initial={{
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
-            }}
-            animate={{
-              y: [null, -30, 30, -30],
-              x: [null, 30, -30, 30],
-              opacity: [0.2, 0.5, 0.2]
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        ))}
-      </div>
+      {/* Floating Particles for Premium Feel - Disabled on Mobile for performance */}
+      {!isMobile && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-gradient-to-r from-sky-500/30 to-purple-500/30 rounded-full"
+              initial={{
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+              }}
+              animate={{
+                y: [null, -30, 30, -30],
+                x: [null, 30, -30, 30],
+                opacity: [0.2, 0.5, 0.2]
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes float {

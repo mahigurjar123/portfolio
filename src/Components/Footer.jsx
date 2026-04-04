@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import Footer3D from './Footer3D';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -123,6 +124,8 @@ const Footer = () => {
       ref={footerRef}
       className="relative bg-gradient-to-b from-zinc-900 to-zinc-950 text-white overflow-hidden"
     >
+      {/* 3D Background */}
+      <Footer3D />
       {/* Animated Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Gradient Orbs */}
@@ -162,7 +165,7 @@ const Footer = () => {
         }} />
       </div>
 
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         {/* Main Footer Content */}
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
 

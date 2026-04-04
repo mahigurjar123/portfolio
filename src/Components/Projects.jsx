@@ -35,8 +35,10 @@ const MagneticButton = ({ children, className, onClick }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   const handleMouseMove = (e) => {
+    if (isMobile) return;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     const relativeX = (e.clientX - left) / width - 0.5;
     const relativeY = (e.clientY - top) / height - 0.5;
@@ -54,7 +56,7 @@ const MagneticButton = ({ children, className, onClick }) => {
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x, y }}
+      style={{ x: isMobile ? 0 : x, y: isMobile ? 0 : y }}
       className={className}
       onClick={onClick}
     >
@@ -68,20 +70,24 @@ const CursorGlow = () => {
   const ref = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   useEffect(() => {
+    if (isMobile) return;
     const handleMouseMove = (e) => {
       mouseX.set(e.clientX - 100);
       mouseY.set(e.clientY - 100);
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <motion.div
       ref={ref}
-      className="fixed w-48 h-48 bg-gradient-to-r from-purple-600/15 to-pink-600/15 rounded-full blur-2xl pointer-events-none"
+      className="fixed w-48 h-48 bg-gradient-to-r from-purple-600/15 to-pink-600/15 rounded-full blur-2xl pointer-events-none z-0"
       style={{ x: mouseX, y: mouseY }}
     />
   );
