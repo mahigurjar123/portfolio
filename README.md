@@ -8,7 +8,7 @@ This project showcases my skills, achievements, and projects as a **Cross-Platfo
 
 ## 🖥️ Live Demo
 
-**Check out the live portfolio here:** [🔗 View Portfolio](https://mahendra-gurjar-portfolio.netlify.app)
+**Check out the live portfolio here:** [🔗 View Portfolio](https://mahi1415.github.io/portfolio/)
 
 ---
 
